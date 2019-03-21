@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: 'app-addtask',
   templateUrl: './addtask.component.html',
   styleUrls: ['./addtask.component.css']
 })
-export class AddtaskComponent implements OnInit {
+export class AddtaskComponent {
 
-  constructor() { }
+  constructor(private todo:TodoService) { }
 
-  ngOnInit() {
+  item : string;
+  add() {
+    this.todo.addItem(this.item, JSON.parse(sessionStorage.getItem('jsessionid')).access_token);
+    console.log(this.item);
+    this.item = '';
   }
+
 
 }

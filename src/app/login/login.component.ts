@@ -1,15 +1,30 @@
 import { Component, OnInit } from '@angular/core';
+import { TokenService } from '../token.service';
+import { Router } from '@angular/router';
+import { UserData } from '../userdata';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent{
 
-  constructor() { }
 
-  ngOnInit() {
+  error = false;
+  userData:UserData = new UserData();
+
+  constructor(private tokenService:TokenService, private router:Router) { }
+
+  login() {
+    if(this.userData.username.length > 0 && this.userData.password.length > 0) {
+      this.tokenService.getToken(this.userData).subscribe(result => {
+        
+        result.expires_in = new Date().getTime() + result.expires_in * 1000;
+        sessionStorage.setItem('jsessionid', JSON.stringify(result));
+
+        this.router.navigateByUrl('/home');
+      }, error => this.error = true);
+    }
   }
-
 }

@@ -12,9 +12,11 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { TasklistComponent } from './tasklist/tasklist.component';
 import { AddtaskComponent } from './addtask/addtask.component';
+import { TodoService } from './todo.service';
 
 const appRoutes : Routes = [
-
+  {path : 'login', component : LoginComponent},
+  {path : '**', component : HomeComponent}
 ];
 
 @NgModule({
@@ -33,7 +35,7 @@ const appRoutes : Routes = [
     RouterModule.forRoot(appRoutes),
     FormsModule,
   ],
-  providers: [TokenService],
+  providers: [TokenService, TodoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
